@@ -33,8 +33,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 
 public class localTesting {
-	public static final String AUTOMATE_USERNAME = "mayankmaurya2";
-	  public static final String AUTOMATE_ACCESS_KEY ="qwudT56wfMJxWLKKhRv1";
+	public static final String AUTOMATE_USERNAME = "";
+	  public static final String AUTOMATE_ACCESS_KEY ="";
 	  public static final String URL = "https://" + AUTOMATE_USERNAME + ":" + AUTOMATE_ACCESS_KEY + "@hub-cloud.browserstack.com/wd/hub";
 	 
 	

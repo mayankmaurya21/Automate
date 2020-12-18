@@ -39,8 +39,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 
 public class googleSearch {
-	public static final String AUTOMATE_USERNAME = "mayankmaurya4";
-	  public static final String AUTOMATE_ACCESS_KEY ="JzJJjes3cyzHaynTqJpe";
+	public static final String AUTOMATE_USERNAME = "";
+	  public static final String AUTOMATE_ACCESS_KEY ="";
 	  public static final String URL = "https://" + AUTOMATE_USERNAME + ":" + AUTOMATE_ACCESS_KEY + "@hub-cloud.browserstack.com/wd/hub";
 	  static String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
 	  
