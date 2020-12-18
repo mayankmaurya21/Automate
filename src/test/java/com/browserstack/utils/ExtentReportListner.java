@@ -46,8 +46,11 @@ public class ExtentReportListner  {
 		return resultpath;
 	}
 
-	public static void onTestStart() {
-		reports=new ExtentHtmlReporter("./extent.html");
+	public static void onTestStart(String reportName) {
+		
+		reports=new ExtentHtmlReporter("./"+reportName+".html");
+		reports.config().setReportName("BrowserStackReport");
+
 		extent= new ExtentReports();
 		 extent.attachReporter(reports);
 		
@@ -70,9 +73,11 @@ public class ExtentReportListner  {
 
 	}
 
-	public static void onTestUnmarked(String sessionName) {
+	public void onTestUnmarked(String sessionName) {
 		test=extent.createTest(sessionName);
 		test.log(Status.INFO, sessionName + "UNMARKED");
+//		test.info("UNMARKED"); 
+		test.log(Status.SKIP, "UNMARKED");
 
 	}
 
@@ -81,6 +86,12 @@ public class ExtentReportListner  {
 
 	}
 
+	public void updateTestInfo(String sessionName, String infoToUpdate) {
+		
+		test.log(Status.INFO, sessionName + infoToUpdate);
+
+
+	}
 
 	public static void onFinish() {
 		

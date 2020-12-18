@@ -8,6 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,6 +28,7 @@ import java.net.URL;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
@@ -42,11 +44,11 @@ public class googleSearch {
 	  public static final String URL = "https://" + AUTOMATE_USERNAME + ":" + AUTOMATE_ACCESS_KEY + "@hub-cloud.browserstack.com/wd/hub";
 	  static String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
 	  
-	  
+	  String build_Name="";
 	  @BeforeTest
 	  public void setup()
 	  {
-		  com.browserstack.utils.ExtentReportListner.onTestStart();
+		  com.browserstack.utils.ExtentReportListner.onTestStart("My First Build");
 		  
 	  }
 	  public static void googleSearch(WebDriver driver) throws MalformedURLException, InterruptedException
@@ -61,14 +63,13 @@ public class googleSearch {
         Thread.sleep(5000);
         Assert.assertEquals("BrowserStack - Google Search", driver.getTitle());
         
-        
-		
 		driver.quit();
 	  }
 	  
 	  @Test
 	public static void launchChrome() throws InterruptedException, UnsupportedEncodingException, URISyntaxException, IOException {
 		  DesiredCapabilities caps = new DesiredCapabilities();
+		 
 		  caps.setCapability("os_version", "10");
 		    caps.setCapability("resolution", "1920x1080");
 		    caps.setCapability("browser_version", "84.0 beta");
@@ -77,6 +78,7 @@ public class googleSearch {
 		    caps.setCapability("project", "Automate Project");
 		    caps.setCapability("build", "My First Build");
 		    caps.setCapability("name", "launchChrome Test");
+		   
 //		    caps.setCapability("browserstack.local", browserstackLocal);
 //		    caps.setCapability("browserstack.local", "true");
 		    com.browserstack.utils.BrowserStackAPI bsApi= new com.browserstack.utils.BrowserStackAPI();
@@ -88,7 +90,27 @@ public class googleSearch {
 		    googleSearch(driver);
 		    System.out.println(bsApi.getSessionDetails(session_id));
 		    String sessionName=bsApi.getValue(bsApi.getSessionDetails(session_id), "name");
+		    String os=bsApi.getValue(bsApi.getSessionDetails(session_id), "os");
+		    String os_version=bsApi.getValue(bsApi.getSessionDetails(session_id), "os_version");
+		    String browser_version=bsApi.getValue(bsApi.getSessionDetails(session_id), "browser_version");
+		    String browser=bsApi.getValue(bsApi.getSessionDetails(session_id), "browser");
+		    String status=bsApi.getValue(bsApi.getSessionDetails(session_id), "status");
+		   String build_name=bsApi.getValue(bsApi.getSessionDetails(session_id), "build_name");
+		    String project_name=bsApi.getValue(bsApi.getSessionDetails(session_id), "project_name");
+		    String browser_url=bsApi.getValue(bsApi.getSessionDetails(session_id), "browser_url");
+		    String public_url=bsApi.getValue(bsApi.getSessionDetails(session_id), "public_url");
+		    
+		    
 	        bsApi.markTestStatus(session_id, "FAILED", "Fail");
+	       reporter.updateTestInfo(sessionName, os);
+	       reporter.updateTestInfo(sessionName, os_version);
+	       reporter.updateTestInfo(sessionName, browser_version);
+	       reporter.updateTestInfo(sessionName, browser);
+	       reporter.updateTestInfo(sessionName, status);
+	       reporter.updateTestInfo(sessionName, build_name);
+	       reporter.updateTestInfo(sessionName, project_name);
+	       reporter.updateTestInfo(sessionName, browser_url);
+	       reporter.updateTestInfo(sessionName, public_url);
 	        reporter.onTestFailure(sessionName);
 	        
 	
@@ -117,8 +139,8 @@ public class googleSearch {
 		   String session_id=sessionid.toString();
 		   String sessionName=bsApi.getValue(bsApi.getSessionDetails(session_id), "name");
 		   System.out.println(bsApi.getSessionDetails(session_id));
-	        bsApi.markTestStatus(session_id, "FAILED", "Fail");
-	        reporter.onTestFailure(sessionName);
+	        
+	        reporter.onTestUnmarked(sessionName);
 
 	}
 	
